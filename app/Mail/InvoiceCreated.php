@@ -15,16 +15,16 @@ class InvoiceCreated extends Mailable
     public $invoiceDate;
     public $taxAmount;
     public $invoiceAmount;
-    public $filePath;
+    public $filename;
     /**
      * Create a new message instance.
      */
-    public function __construct($invoiceDate, $taxAmount, $invoiceAmount, $filePath)
+    public function __construct($invoiceDate, $taxAmount, $invoiceAmount, $filename)
     {
         $this->invoiceDate = $invoiceDate;
         $this->taxAmount = $taxAmount;
         $this->invoiceAmount = $invoiceAmount;
-        $this->filePath = $filePath;
+        $this->filename = $filename;
     }
 
     /**
@@ -45,29 +45,6 @@ class InvoiceCreated extends Mailable
         return new Content(
             view: 'email.invoiceCreated',
         );
-    }
-
-    public function build()
-    {
-        $mail = $this->view('email.invoiceCreated')
-        ->with([
-            'invoiceDate' => $this->invoiceDate,
-            'taxAmount' => $this->taxAmount,
-            'invoiceAmount' => $this->invoiceAmount,
-        ]);
-
-        // Attach the file if it's not null
-        if ($this->filePath !== null) {
-            $mail->attach($this->filePath);
-        } else {
-            // Handle null attachment
-            $mail->withSwiftMessage(function ($message) {
-                $message->getBody()
-                    ->addPart('No attachment provided.', 'text/plain');
-            });
-        }
-
-        return $mail;
     }
     /**
      * Get the attachments for the message.

@@ -28,7 +28,7 @@ class InvoiceRequest extends FormRequest
             'amount' => 'required|numeric',
             'quantity' => 'required|numeric',
             'percentage' => 'required|in:0,5,12,18,28',
-            'file' => 'nullable|file|max:3072|mimes:jpg,png,pdf',
+            'file' => 'required|file|max:3072|mimes:jpg,png,pdf',
         ];
     }
 }

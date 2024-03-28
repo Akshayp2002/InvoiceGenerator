@@ -18,7 +18,6 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoice = Invoice::get();
-        // dd($invoice);
         return view('dashboard', compact('invoice'));
     }
 
@@ -58,12 +57,11 @@ class InvoiceController extends Controller
                 'net_amount'   => $net_amount,
                 'file_path'    => $filename ?? null,
             ]);
-            $filePath = $request->hasFile('file') ? $request->file('file')->getPathname() : null;
-
+            //Mail send functionality
+            $filePath = asset('uploads/' . $filename);
             Mail::to($request->email)->send(new InvoiceCreated($request->date, $tax_amount, $request->amount, $filePath));
             return \to_route('dashboard');
         } catch (Exception $e) {
-            dd($e);
             return \redirect()->back();
         }
     }
@@ -87,14 +85,14 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(InvoiceRequest $request, string $id)
     {
         try {
             $total_amount = $request->quantity * $request->amount;
             $tax_amount = ($total_amount * $request->percentage) / 100;
             $net_amount = $total_amount + $tax_amount;
 
-            $invoice = Invoice::findOrFail($id); 
+            $invoice = Invoice::findOrFail($id);
 
             $invoice->name = $request->name;
             $invoice->date = $request->date;
@@ -112,8 +110,10 @@ class InvoiceController extends Controller
                 $file->move(public_path('uploads'), $filename);
                 $invoice->file_path = $filename;
             }
-
             $invoice->save();
+            //Mail send functionality
+            $filePath = asset('uploads/' . $filename);
+            Mail::to($request->email)->send(new InvoiceCreated($request->date, $tax_amount, $request->amount, $filePath));
             return \to_route('dashboard');
         } catch (Exception $e) {
             return \redirect()->back();

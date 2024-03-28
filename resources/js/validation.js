@@ -1,6 +1,6 @@
 console.log($.html);
 $(document).ready(function () {
-    console.log("teststs")
+    console.log("Booom")
     $('#form').validate({
         rules: {
             name: {
