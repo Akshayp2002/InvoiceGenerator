@@ -6,38 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'K UI') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Styles -->
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
+    <div x-data="mainState" :class="{ dark: isDarkMode }" x-on:resize.window="handleWindowResize" x-cloak>
+        <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
+            <!-- Sidebar -->
+            <x-sidebar.sidebar />
 
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+            <!-- Page Wrapper -->
+            <div class="flex flex-col min-h-screen"
+                :class="{
+                    'lg:ml-64': isSidebarOpen,
+                    'md:ml-16': !isSidebarOpen
+                }"
+                style="transition-property: margin; transition-duration: 150ms;">
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+                <!-- Navbar -->
+                <x-navbar />
+
+                <!-- Page Heading -->
+                <header>
+                    <div class="p-4 sm:p-6">
+                        {{ $header }}
+                    </div>
+                </header>
+
+                <!-- Page Content -->
+                <main class="px-4 sm:px-6 flex-1">
+                    {{ $slot }}
+                </main>
+
+                <!-- Page Footer -->
+                <x-footer />
+            </div>
+        </div>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 @stack('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+<script src="https://kit.fontawesome.com/5650dca2fd.js" crossorigin="anonymous"></script>
 
 </html>

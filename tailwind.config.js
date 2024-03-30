@@ -1,24 +1,32 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
+    darkMode: 'class',
+
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        "./node_modules/flowbite/**/*.js"
+        './resources/js/**/*.js',
     ],
 
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+            },
+
+            colors: {
+                dark: {
+                    'eval-0': '#151823',
+                    'eval-1': '#222738',
+                    'eval-2': '#2A2F42',
+                    'eval-3': '#2C3142',
+                },
             },
         },
     },
 
-    plugins: [
-        require('flowbite/plugin')
-    ]
-};
+    plugins: [require('@tailwindcss/forms')],
+}

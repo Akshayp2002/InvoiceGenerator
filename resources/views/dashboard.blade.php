@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between align-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <h2 class="text-xl font-semibold leading-tight">
                 {{ __('Dashboard') }}
             </h2>
             <a href="{{ route('invoices.create') }}"
@@ -94,13 +94,13 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <a href="{{ route('invoices.edit', $invoice->id) }}"
-                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><i class="fa-regular fa-pen-to-square"></i></a>
                                             <form method="POST" action="{{ route('invoices.destroy', $invoice->id) }}"
                                                 style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" onclick="return confirmDelete()"
-                                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</button>
+                                                    class="font-medium text-red-600 dark:text-red-500 hover:underline ml-3"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -112,9 +112,4 @@
             </div>
         </div>
     </div>
-    <script>
-        function confirmDelete() {
-            return confirm('Are you sure you want to delete this invoice?');
-        }
-    </script>
 </x-app-layout>
