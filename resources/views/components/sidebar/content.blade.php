@@ -46,7 +46,7 @@
     >
         Dummy Links
     </div>
-
+    <x-sidebar.link title="Products" href="{{route('products.index')}}" />
     {{-- @php
         $links = array_fill(0, 20, '');
     @endphp

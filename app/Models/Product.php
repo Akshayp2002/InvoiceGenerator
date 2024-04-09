@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
+{
+    use HasFactory;
+    protected $table = 'products';
+    protected $fillable = [
+        'name',
+        'date',
+        'email',
+        'amount',
+        'subtext',
+        'description',
+        'quantity',
+        'rating',
+        'discount',
+        'quantity',
+        'file_path',
+    ];
+}
